@@ -10,29 +10,65 @@
 		"Other"
 	],
 	"activationEvents": [
-		"onCommand:extension.helloWorld"
+		"onView:tagExplorer"
 	],
-	"main": "./extension.js",
+	"main": "./dist/extension.js",
 	"contributes": {
+		"views": {
+			"explorer": [
+				{
+					"id": "tagExplorer",
+					"name": "Tags"
+				}
+			]
+		},
 		"commands": [
 			{
-				"command": "extension.helloWorld",
-				"title": "Hello World"
+				"command": "extension.tagFile",
+				"title": "Tag File"
+			},
+			{
+				"command": "tagExplorer.addTag",
+				"title": "Add"
 			}
-		]
+		],
+		"menus": {
+			"explorer/context": [
+				{
+					"command": "extension.tagFile",
+					"group": "navigation@1"
+				}
+			],
+			"view/title": [
+				{
+					"command": "tagExplorer.addTag",
+					"when": "view == tagExplorer",
+					"group": "navigation"
+				}
+			]
+		}
 	},
 	"scripts": {
-		"test": "node ./test/runTest.js"
+		"test": "node ./test/runTest.js",
+		"vscode:prepublish": "webpack --mode production",
+		"compile": "webpack --mode none",
+		"watch": "webpack --mode none --watch"
 	},
 	"devDependencies": {
+		"@babel/core": "^7.5.5",
+		"@babel/preset-env": "^7.5.5",
 		"@types/glob": "^7.1.1",
 		"@types/mocha": "^5.2.6",
 		"@types/node": "^10.12.21",
 		"@types/vscode": "^1.36.0",
+		"babel-loader": "^8.0.6",
 		"eslint": "^5.13.0",
 		"glob": "^7.1.4",
 		"mocha": "^6.1.4",
 		"typescript": "^3.3.1",
-		"vscode-test": "^1.0.2"
-	}
+		"vscode-test": "^1.0.2",
+		"webpack": "^4.39.1",
+		"webpack-cli": "^3.3.6"
+	},
+	"dependencies": {}
 }
